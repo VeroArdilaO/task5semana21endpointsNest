@@ -1,14 +1,20 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Delete, Get, HttpCode, Post, Put } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, Post, Put, Param } from '@nestjs/common';
 
 @Controller('endpoints')
 export class EndpointsController {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
-  @Get()
+  @Get(':EjemploGet1=1&queryEjemploGet2=2&queryEjemploGet3=3')
   @HttpCode(200)
-  public get() {
-    return { name: 'GET' };
+  public get(@Param('id') id) {
+    console.log(id);
+    return {
+      name: 'GET',
+      queryEjemploGet1: 1,
+      queryEjemploGet2: 2,
+      queryEjemploGet3: 3,
+    };
   }
 
   @Post()
@@ -18,14 +24,15 @@ export class EndpointsController {
   }
 
   @Put()
-  @HttpCode(200)
+  @HttpCode(201)
   public put() {
     return { name: 'PUT' };
   }
 
-  @Delete()
+  @Delete(':EjemploDelete=1')
   @HttpCode(200)
   public delete() {
-    return { name: 'DELETE' };
+    return { name: 'DELETE', queryEjemploDelete: 1 };
   }
 }
+
