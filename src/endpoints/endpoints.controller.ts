@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Delete, Get, HttpCode, Post, Put } from '@nestjs/common';
 
 @Controller('endpoints')
@@ -17,7 +18,7 @@ export class EndpointsController {
   }
 
   @Put()
-  @HttpCode(201)
+  @HttpCode(200)
   public put() {
     return { name: 'PUT' };
   }
