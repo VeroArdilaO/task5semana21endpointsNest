@@ -1,20 +1,18 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Delete, Get, HttpCode, Post, Put, Param } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, Post, Put, HttpStatus, Res, Query, Logger } from '@nestjs/common';
+import  {Response} from 'express';
 
 @Controller('endpoints')
 export class EndpointsController {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
-  @Get(':EjemploGet1=1&queryEjemploGet2=2&queryEjemploGet3=3')
-  @HttpCode(200)
-  public get(@Param('id') id) {
-    console.log(id);
-    return {
-      name: 'GET',
-      queryEjemploGet1: 1,
-      queryEjemploGet2: 2,
-      queryEjemploGet3: 3,
-    };
+   @Get()
+  public get(@Query() query: any, @Res() response: Response) {
+    Logger.log(query);
+    return response.status(HttpStatus.OK).send({
+      nombre: 'get',
+      query,
+    });
   }
 
   @Post()
@@ -29,10 +27,13 @@ export class EndpointsController {
     return { name: 'PUT' };
   }
 
-  @Delete(':EjemploDelete=1')
-  @HttpCode(200)
-  public delete() {
-    return { name: 'DELETE', queryEjemploDelete: 1 };
+  @Delete()
+  public delete(@Query() query: any, @Res() response: Response) {
+    Logger.log(query);
+    return response.status(HttpStatus.OK).send({
+      nombre: 'get',
+      query,
+    });
   }
 }
 
