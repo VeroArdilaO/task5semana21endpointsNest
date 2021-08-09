@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Delete, Get, HttpCode, Post, Put, HttpStatus, Res, Query, Logger } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Put, HttpStatus, Res, Query, Logger, Body } from '@nestjs/common';
 import  {Response} from 'express';
 
 @Controller('endpoints')
@@ -15,25 +15,51 @@ export class EndpointsController {
     });
   }
 
+  /*URL para get http://localhost:3000/endpoints?queryEjemploGet1=1&queryEjemploGet2=2&queryEjemploGet3=3  */
+
   @Post()
-  @HttpCode(201)
-  public post() {
-    return { name: 'POST' };
+  public post(@Query() query: any, @Body() body: any, @Res() response: Response) {
+    Logger.log(query);
+    return response.status(HttpStatus.CREATED).send({
+      nombre: 'Post',
+      query,
+      body,
+    });
   }
 
+ /*  URL  http://localhost:3000/endpoints?queryEjemploPost=1 
+ 
+  {"infoBodyPost": "jsonEnviadoEnElBody"} 
+  
+   */
+
   @Put()
-  @HttpCode(201)
-  public put() {
-    return { name: 'PUT' };
+  public put(@Query() query: any, @Body() body: any, @Res() response: Response) {
+    Logger.log(query);
+    return response.status(HttpStatus.OK).send({
+      nombre: 'Put',
+      query,
+      body,
+    });
   }
+  
+
+ /*  
+ 
+ URL  http://localhost:3000/endpoints?queryEjemploPut=1 
+ 
+ {"infoBodyPut": "jsonEnviadoEnElBody"} 
+ 
+ */
 
   @Delete()
   public delete(@Query() query: any, @Res() response: Response) {
     Logger.log(query);
     return response.status(HttpStatus.OK).send({
-      nombre: 'get',
+      nombre: 'Delete',
       query,
     });
   }
 }
 
+  /*URL para delete http://localhost:3000/endpoints?queryEjemploDelete=1   */
